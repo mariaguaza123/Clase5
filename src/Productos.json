@@ -1,0 +1,17 @@
+[
+	{
+		"nameProduct": "Blusa Azul",
+		"price": "45 USD",
+		"id": 1
+	},
+	{
+		"nameProduct": "Tacones rojos",
+		"price": "60 USD",
+		"id": 2
+	},
+	{
+		"nameProduct": "Blusa roja",
+		"price": "45 USD",
+		"id": 3
+	}
+]
