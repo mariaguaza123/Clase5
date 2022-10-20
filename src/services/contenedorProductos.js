@@ -28,8 +28,8 @@ module.exports = class ContenedorProductos{
               }
                res(products[produtoEncontrado]);
               
-            }else{
-              rej('Error no se encontro el Id');
+            }else{ 
+              return rej('Error no se encontro el Id');
             }
         });
     }
@@ -92,7 +92,7 @@ module.exports = class ContenedorProductos{
 
     // }
 
-    actualizaProducto = async(req,res)=>{
+    actualizaProducto = async(req,res)=> {
     const id = req.params.id;
 	const {nameProduct, price} = req.body;
     const products = await this.getAllProductos();
@@ -125,15 +125,18 @@ module.exports = class ContenedorProductos{
     }
 
     eliminarProducto = async(req,res)=>{
-        const id = req;
+        const id = req.params.id;
         const products = await this.getAllProductos();
         const indice = products.findIndex(unProducto => unProducto.id == id);
+
+        if(indice < 0){return res.json({msg: "ok"})}
+
         products.splice(indice,1);
         await fs.writeFile(filePath, JSON.stringify(products,null, '\t'), (err)=>{
                 if(err){
                     console.log("No se pudo eliminar");
                 }
-                return res('El producto fue eliminado con exito');
+                return ('El producto fue eliminado con exito');
             });
     }
 

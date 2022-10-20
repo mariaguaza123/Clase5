@@ -22,14 +22,14 @@ rutaProductos.get('/',  async(req,res) =>{
      res.send(nuevoProducto);
   });
  
-  rutaProductos.put('/:id',async (req,res)=>{
+  rutaProductos.put('/:id',async (req,res)=> {
      let actualizaProducto = await contenedorNuevo.actualizaProducto(req);
      res.send(actualizaProducto);
   });
  
   rutaProductos.delete('/:id', async(req,res) =>{
-     
-     let eliminaProducto = await contenedorNuevo.eliminarProducto(req.body);
+      
+     let eliminaProducto = await contenedorNuevo.eliminarProducto(req);
      res.send(eliminaProducto);
   });
 
