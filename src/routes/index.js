@@ -23,7 +23,7 @@ rutaProductos.get('/',  async(req,res) =>{
   });
  
   rutaProductos.put('/:id',async (req,res)=>{
-     let actualizaProducto = await contenedorNuevo.actualizaProducto(req.body);
+     let actualizaProducto = await contenedorNuevo.actualizaProducto(req);
      res.send(actualizaProducto);
   });
  

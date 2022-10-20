@@ -65,30 +65,62 @@ module.exports = class ContenedorProductos{
         
     }
     
-    actualizaProducto = async(req,res)=>{
-        const id = req.id;
-        const products = await this.getAllProductos();
-        const {nameProduct,price} = req;
+    // actualizaProducto = async(req,res)=>{
+    //     const id = req.id;
+    //     const products = await this.getAllProductos();
+    //     const {nameProduct,price} = req;
 
-        const indice = products.findIndex(unProducto => unProducto.id == id);
-        if(indice <0){return res.status(404).send("Error la lista no se escuentra")}
+    //     const indice = products.findIndex(unProducto => unProducto.id == id);
+    //     if(indice <0){return res.status(404).send("Error la lista no se escuentra")}
 
          
-        const productoActualizado = {
-            nameProduct,
-            price,
-            id : req.id
-        }
-        products.splice(indice,1,productoActualizado);
-        console.log(productoActualizado);
-        await fs.writeFile(filePath, JSON.stringify(products,null, '\t'), (err)=>{
-            if(err){
-                console.log("No se pudo actualizado");
-            }
-            return ('El producto actualizado con exito');
-        });
+    //     const productoActualizado = {
+    //         nameProduct,
+    //         price,
+    //         id : req.id
+    //     }
+    //     products.splice(indice,1,productoActualizado);
+    //     console.log(productoActualizado);
+    //     await fs.writeFile(filePath, JSON.stringify(products,null, '\t'), (err)=>{
+    //         if(err){
+    //             console.log("No se pudo actualizado");
+    //         }
+    //         return ('El producto actualizado con exito');
+    //     });
 
-        return ('Modificando objeto con id');
+    //     return ('Modificando objeto con id');
+
+    // }
+
+    actualizaProducto = async(req,res)=>{
+    const id = req.params.id;
+	const {nameProduct, price} = req.body;
+    const products = await this.getAllProductos();
+    const indice = products.findIndex(unProducto => unProducto.id == id);
+    if(indice < 0){
+		return res.status(404).json({
+			msg: "el producto no existe"
+		})
+	}
+    if(!nameProduct || !price) {
+		return res.status(400).json({
+			msg: "Campos invalidos"
+		})
+	}
+    const productoActualizado = {
+		id: products[indice].id,
+		nameProduct,
+		price
+	}
+    products.splice(indice, 1, productoActualizado);
+
+	await fs.writeFile(filePath, JSON.stringify(products, null, '\t'),(err)=>{
+        if(err){
+            return "Error no se puede actualizar el producto";
+        }
+        return "Producto actualizado";
+    });
+    
 
     }
 
